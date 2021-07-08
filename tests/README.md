@@ -1,52 +1,63 @@
-# First, we assume you run the tests in a Unix/Linux environment.  If you do not
-# have such an environment, either figure it out or log in to a Linux machine at
-# the Mala Strana lab.  See http://mff.devnull.cz/c-prog-lang/ for more details.
+At least 2 GiB space in temporary directory used by the tests is needed to run
+the tests.
 
-# At least 2 GiB space in temporary directory used by the tests is needed to run
-# the tests.
+Before running the tests via "./run-tests.sh", you need to set the "STEF"
+variable in your shell to the "stef.sh" script.  Get it here:
+https://github.com/devnull-cz/stef
 
-# Before running the tests via "./run-tests.sh", you need to set the "STEF"
-# variable in your shell to the "stef.sh" script.  Get it here:
-# https://github.com/devnull-cz/stef
-#
-# For example:
+For example:
+
+```sh
 export STEF="/Volumes/repos/stef/stef.sh"
+```
 
-# Then, you need to set the following two variables to the right values either
-# in "test-config.local" or just export them in the same shell before executing
-# "./run-tests.sh".  The test suite will build mytar itself using the MYTAR_C
-# variable value.
-#
-# On Linux distros, GNU tar is just /bin/tar.
-#
-# On macOS, /bin/tar is NOT a GNU tar.  With the MacPorts collection, GNUTAR
-# should be set to /opt/local/bin/gnutar.  However, it still may work
-# differently than Linux tar.  That is why you MUST pass the tests on one of the
-# u-plN machine in the MFF UK lab (remotely accessible) that serve as our common
-# environment.  See http://mff.devnull.cz/c-prog-lang for more information.
-#
-# Example:
+Then, you need to set the following two variables to the right values either
+in "test-config.local" or just export them in the same shell before executing
+"./run-tests.sh". The test suite will build mytar itself using the MYTAR_C
+variable value.
+
+On Linux distros, GNU tar is just /bin/tar.
+
+On macOS, /bin/tar is NOT a GNU tar.  With the MacPorts collection, GNUTAR
+should be set to /opt/local/bin/gnutar.  However, it still may work
+differently than Linux tar.
+
+Example:
+
+```sh
 export GNUTAR="$(which tar)"
 export MYTAR_C="/Volumes/repos/mytar/mytar.c"
+```
 
-# In order to verify your testing environment is set up correctly, set MYGNUTAR
-# to the system GNU tar.  See the example output below for more information.
-#
-# Example:
-###export MYGNUTAR="$(which gnutar)"
+In order to verify your testing environment is set up correctly, set MYGNUTAR
+to the system GNU tar.  See the example output below for more information.
 
-# When you have set STEF, GNUTAR, and MYTAR_C (or MYGNUTAR instead, see below),
-# you are ready to run the tests:
-#
-# Phase 1
+Example:
+
+```sh
+export MYGNUTAR="$(which gnutar)"
+```
+
+When you have set STEF, GNUTAR, and MYTAR_C (or MYGNUTAR instead, see below),
+you are ready to run the tests:
+
+Phase 1
+
+```sh
 ./run-tests.sh $(cat phase-1.tests)
-# Phase 2
-./run-tests.sh
+```
 
-# Example output to verify the testing environment with GNU tar.  You still need
-# to set both GNUTAR.
-#
-# == 8< ==
+Phase 2
+
+```sh
+./run-tests.sh $(cat phase-2.tests)
+```
+
+Example output to verify the testing environment with GNU tar.  You still need
+to set both GNUTAR :
+
+```sh
+
 $ export STEF="/Volumes/repos/stef/stef.sh"
 $ export GNUTAR="$(which gnutar)"
 $ export MYGNUTAR="$(which gnutar)"
@@ -99,13 +110,14 @@ Skipping unconfiguration (STEF_UNCONFIGURE_NEVER).
 
 === [ NPRG099 Tar Unit Tests Results ] ===
 All tests passed.
-# == 8< ==
 
-# After, you can start testing your implementation.  If you do it right after
-# running the tests with the GNU tar binary, you need to unset some of those
-# variables.  You must see the "Building the 'mytar' binary" output.
+```
 
-# == 8< ==
+After, you can start testing your implementation.  If you do it right after
+running the tests with the GNU tar binary, you need to unset some of those
+variables.  You must see the "Building the 'mytar' binary" output.
+
+```sh
 $ unset MYGNUTAR
 $ export STEF="/Volumes/repos/stef/stef.sh"
 $ export MYTAR_C="/Volumes/repos/mytar/mytar.c"
@@ -161,11 +173,11 @@ Skipping unconfiguration (STEF_UNCONFIGURE_NEVER).
 
 === [ NPRG099 Tar Unit Tests Results ] ===
 All tests passed.
-# == 8< ==
+```
 
 For the phase 2 tests, example output (number of tests may increase):
 
-# == 8< ==
+```sh
 $ ./run-tests.sh 
 === [ NPRG099 Tar Unit Tests ] ===
 Checking configuration sanity.
@@ -234,4 +246,4 @@ Skipping unconfiguration (STEF_UNCONFIGURE_NEVER).
 
 === [ NPRG099 Tar Unit Tests Results ] ===
 All tests passed.
-# == 8< ==
+```
